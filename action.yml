@@ -5,7 +5,7 @@ inputs:
   github-token:
     description: "GitHub token for API access"
     required: true
-  repo-name:
+  repository:
     description: "Repository name (e.g., owner/repo). Defaults to the current repository."
     required: false
     default: ${{ github.repository }}
@@ -21,6 +21,10 @@ inputs:
     description: "Title of the discussion to update/create"
     required: false
     default: "Aggregated Comments"
+  discussion-category:
+    description: "Category for the discussion"
+    required: false
+    default: "General"
 runs:
   using: "composite"
   steps:
@@ -42,3 +46,4 @@ runs:
         LABEL_NAME: ${{ inputs.label-name }}
         COMMENT_PREFIX: ${{ inputs.comment-prefix }}
         DISCUSSION_TITLE: ${{ inputs.discussion-title }}
+        DISCUSSION_CATEGORY: ${{ inputs.discussion-category }}
