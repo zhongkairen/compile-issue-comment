@@ -1,0 +1,44 @@
+name: Aggregate Comments to Discussion
+description: Aggregates GitHub issue comments into a discussion thread based on filters.
+author: Your Name
+inputs:
+  github-token:
+    description: "GitHub token for API access"
+    required: true
+  repo-name:
+    description: "Repository name (e.g., owner/repo). Defaults to the current repository."
+    required: false
+    default: ${{ github.repository }}
+  label-name:
+    description: "Issue label to filter by"
+    required: false
+    default: "bug"
+  comment-prefix:
+    description: "Prefix to filter issue comments"
+    required: false
+    default: "DISCUSSION:"
+  discussion-title:
+    description: "Title of the discussion to update/create"
+    required: false
+    default: "Aggregated Comments"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install -r requirements.txt
+
+    - name: Run aggregation script
+      shell: bash
+      run: python scripts/aggregate_comments.py
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        REPO_NAME: ${{ inputs.repo-name }}
+        LABEL_NAME: ${{ inputs.label-name }}
+        COMMENT_PREFIX: ${{ inputs.comment-prefix }}
+        DISCUSSION_TITLE: ${{ inputs.discussion-title }}
