@@ -17,6 +17,6 @@ jobs:
         uses: ./ # Use the action in the current repo for testing
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          label-name: "bug"
-          comment-prefix: "[week"
-          discussion-title: "Test Aggregated Comments"
+          label-name: "epic"
+          comment-prefix: "[week02]"
+          discussion-heading: "Weekly log"

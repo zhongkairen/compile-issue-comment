@@ -17,8 +17,8 @@ inputs:
     description: "Prefix to filter issue comments"
     required: false
     default: "DISCUSSION:"
-  discussion-title:
-    description: "Title of the discussion to update/create"
+  discussion-heading:
+    description: "Heading of the discussion to update/create"
     required: false
     default: "Aggregated Comments"
   discussion-category:
@@ -45,5 +45,5 @@ runs:
         REPO_NAME: ${{ inputs.repo-name }}
         LABEL_NAME: ${{ inputs.label-name }}
         COMMENT_PREFIX: ${{ inputs.comment-prefix }}
-        DISCUSSION_TITLE: ${{ inputs.discussion-title }}
+        DISCUSSION_HEADING: ${{ inputs.discussion-heading }}
         DISCUSSION_CATEGORY: ${{ inputs.discussion-category }}

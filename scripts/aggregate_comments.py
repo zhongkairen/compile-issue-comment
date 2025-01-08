@@ -5,16 +5,18 @@ import requests
 
 def get_issues_and_comments(repo, label, comment_prefix):
     issues = repo.get_issues(state="open", labels=[label])
-    aggregated_content = "# Aggregated Comments\n\n"
+    aggregated_content = ""
 
     for issue in issues:
         relevant_comments = [
             comment for comment in issue.get_comments() if comment.body.startswith(comment_prefix)
         ]
         if relevant_comments:
-            aggregated_content += f"### Issue #{issue.number}: {issue.title}\n"
-            for comment in relevant_comments:
-                aggregated_content += f"- {comment.body}\n\n"
+            aggregated_content += f"### Issue #{issue.number}: {issue.title} - "
+            comments = [comment.body.replace(
+                comment_prefix, "").lstrip() for comment in relevant_comments]
+            aggregated_content += " ".join(comments)
+            print(f"Aggregated content: '{comments}'")
 
     return aggregated_content
 
@@ -72,7 +74,9 @@ def edit_discussion(discussion_id, new_content, token):
     return data["data"]["updateDiscussion"]["discussion"]
 
 
-def create_or_update_discussion(repo, discussion_title, content, graphql_schema, owner, repo_name, token, category_id):
+def create_or_update_discussion(repo, discussion_heading, comment_prefix, content, graphql_schema, owner, repo_name, token, category_id):
+    content = f"# {discussion_heading}\n\n" + content
+    discussion_title = comment_prefix.strip("[]").strip()
     discussions = fetch_discussions(owner, repo_name, graphql_schema, token)
 
     # Check for existing discussion
@@ -185,7 +189,7 @@ def main():
     repository = os.getenv("REPOSITORY")
     label_name = os.getenv("LABEL_NAME")
     comment_prefix = os.getenv("COMMENT_PREFIX")
-    discussion_title = os.getenv("DISCUSSION_TITLE")
+    discussion_heading = os.getenv("DISCUSSION_HEADING")
     discussion_category = os.getenv("DISCUSSION_CATEGORY")
 
     # Debug prints for all variables
@@ -193,7 +197,7 @@ def main():
     print(f"REPOSITORY: {repository}")
     print(f"LABEL_NAME: {label_name}")
     print(f"COMMENT_PREFIX: {comment_prefix}")
-    print(f"DISCUSSION_TITLE: {discussion_title}")
+    print(f"DISCUSSION_HEADING: {discussion_heading}")
     print(f"DISCUSSION_CATEGORY: {discussion_category}")
 
     owner = repository.split("/")[0]  # Extract owner from 'owner/repo'
@@ -234,7 +238,7 @@ def main():
     aggregated_content = get_issues_and_comments(
         repo, label_name, comment_prefix)
     create_or_update_discussion(
-        repo, discussion_title, aggregated_content, graphql_schema, owner, repo_name, token, category_id)
+        repo, discussion_heading, comment_prefix, aggregated_content, graphql_schema, owner, repo_name, token, category_id)
 
 
 if __name__ == "__main__":
