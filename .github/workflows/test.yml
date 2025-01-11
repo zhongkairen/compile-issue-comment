@@ -19,4 +19,4 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           label-name: "epic"
           comment-prefix: "[week02]"
-          discussion-heading: "Weekly log"
+          discussion-heading: "Week 02"
