@@ -1,8 +1,5 @@
-# github-weekly-tool
-
-# Aggregate Comments Action
-
-This GitHub Action aggregates issue comments with a specific prefix and updates/creates a discussion thread.
+# compile-issue-comment
+A GitHub action that Gathers issue comments, compiles them into a cohesive paragraph, and posts the result in a discussion.
 
 ## Inputs
 
@@ -30,12 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Aggregate Comments
-      uses: zhongkairen/github-weekly-tool@v1
+      uses: zhongkairen/compile-issue-comment@v1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        repo-name: your-org/your-repo
         label-name: "epic"
         comment-prefix: "[week03]"
         discussion-heading: "Weekly log - week 3"
 ```
-More can be found from `.github/workflows/test.yml`.
+More details can be found in `.github/workflows/test.yml`.
