@@ -14,7 +14,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
       - name: Test Action
-        uses: ./ # Use the action in the current repo for testing
+        uses: zhongkairen/compile-issue-comment@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           label-name: "epic"
