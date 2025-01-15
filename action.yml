@@ -45,7 +45,7 @@ runs:
       run: python scripts/aggregate_comments.py
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
-        REPO_NAME: ${{ inputs.repo-name }}
+        REPOSITORY: ${{ inputs.repository }}
         LABEL_NAME: ${{ inputs.label-name }}
         COMMENT_PREFIX: ${{ inputs.comment-prefix }}
         DISCUSSION_HEADING: ${{ inputs.discussion-heading }}
