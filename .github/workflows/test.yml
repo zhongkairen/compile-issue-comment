@@ -11,10 +11,24 @@ jobs:
   test-action:
     runs-on: ubuntu-latest
     steps:
-      - name: Test Action
-        uses: zhongkairen/compile-issue-comment@v1
+      - name: Install current-week-number module
+        run: |
+          npm install current-week-number
+
+      - name: Get Current Week Number
+        id: week
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const currentWeekNumber = require('current-week-number');
+            const weekNumber = currentWeekNumber();
+            console.log(`Current week number: ${weekNumber}`);
+            core.exportVariable('CURRENT_WEEK_NUMBER', weekNumber);
+
+      - name: Compile Issue Comments to Discussion
+        uses: zhongkairen/compile-issue-comment@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           label-name: "epic"
-          comment-prefix: "[week02]"
-          discussion-heading: "Week 02"
+          comment-prefix: "[week${{ env.CURRENT_WEEK_NUMBER }}]"
+          discussion-heading: "Week ${{ env.CURRENT_WEEK_NUMBER }}"
