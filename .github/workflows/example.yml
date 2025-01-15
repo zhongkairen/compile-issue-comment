@@ -1,4 +1,4 @@
-name: Test Aggregate Comments Action
+name: Example Aggregate Comments Action
 
 on:
   push:
