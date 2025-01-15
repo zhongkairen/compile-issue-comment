@@ -26,7 +26,7 @@ jobs:
             core.exportVariable('CURRENT_WEEK_NUMBER', weekNumber);
 
       - name: Compile Issue Comments to Discussion
-        uses: zhongkairen/compile-issue-comment@v3-pre
+        uses: zhongkairen/compile-issue-comment@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           label-name: "epic"
