@@ -27,11 +27,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Aggregate Comments
-      uses: zhongkairen/compile-issue-comment@v1
+      uses: zhongkairen/compile-issue-comment@latest
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         label-name: "epic"
-        comment-prefix: "[week03]"
+        comment-prefix: "[week3]"
         discussion-heading: "Weekly log - week 3"
 ```
-More details can be found in `.github/workflows/test.yml`.
+More details can be found in `.github/workflows/example.yml`.
